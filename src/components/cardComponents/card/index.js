@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Image from '../../imageComponents';
 import { cardSize, pageSize } from '../data/option-data';
 import { RRC } from '../util';
 
@@ -93,7 +94,7 @@ export const Icon = ({ card_data, options, iconMap }) => {
     return (
         <div className={a}>
             <div className={b}>
-                <img src={path} />
+                <Image src={path} alt=""/>
             </div>
         </div>
     );
@@ -105,7 +106,7 @@ const IconBack = ({ card_data, options, iconMap }) => {
 
     return (
         <div className='card-back-icon'>
-            <img src={path} />
+            <Image src={path} alt=""/>
         </div>
     );
 };
@@ -139,7 +140,7 @@ export const InlineIcon = ({ params, card_data, options, iconMap }) => {
     };
     return (
         <div className={a} style={b}>
-            <img src={path} />
+            <Image src={path} alt="" />
         </div>
     );
 };

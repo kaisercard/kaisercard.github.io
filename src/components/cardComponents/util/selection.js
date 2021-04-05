@@ -15,7 +15,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import { Pagination } from '@material-ui/lab';
 import React from 'react';
-import { GithubPicker } from 'react-color';
+import { CompactPicker, GithubPicker } from 'react-color';
 import { RRC } from '.';
 import { css_color_names } from '../data/color';
 
@@ -117,9 +117,8 @@ export const ColorSelector = ({
                 anchorEl={anchorEl}
                 onClose={handleClose}
             >
-                <GithubPicker
+                <CompactPicker
                     {...props}
-                    colors={css_color_names}
                     color={color}
                     triangle='top-left'
                     width={12 + width * 25}
@@ -197,7 +196,6 @@ export const IconSelector = ({
                 style={{
                     position: 'relative',
                     height: '48px',
-                    position: 'relative',
                     overflow: 'hidden',
                 }}
                 onClick={handleOpen}
@@ -213,8 +211,9 @@ export const IconSelector = ({
                         WebkitTransform: 'translate(-50%, -50%)',
                         MsTransform: 'translate(-50%, -50%)',
                         transform: 'translate(-50%, -50%)',
+                        display: path ? 'initial' : 'none',
                     }}
-                    src={path}
+                    src={path || ''}
                     alt=''
                 />
                 <span
@@ -320,16 +319,27 @@ const IconOption = ({ id, name, path, current, onClick, ...props }) => {
                 }}
                 onClick={() => onClick(id)}
             >
-                <img
-                    style={{
-                        backgroundColor: 'black',
-                        height: '160px',
-                        width: '160px',
-                        display: 'block',
-                    }}
-                    src={path}
-                    alt=''
-                />
+                {path ? (
+                    <img
+                        style={{
+                            backgroundColor: 'black',
+                            height: '160px',
+                            width: '160px',
+                            display: 'block',
+                        }}
+                        src={path}
+                        alt=''
+                    />
+                ) : (
+                    <div
+                        style={{
+                            backgroundColor: 'black',
+                            height: '160px',
+                            width: '160px',
+                            display: 'block',
+                        }}
+                    />
+                )}
                 <button
                     style={{
                         height: '40px',
