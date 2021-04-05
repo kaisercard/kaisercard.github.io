@@ -20,13 +20,13 @@ export const pageSize = {
     },
     '40x60': {
         name: '4.0" × 6.0"',
-        hint: '',
+        hint: 'Index card',
         width: '4in',
         height: '6in',
     },
     '425x55': {
         name: '4.25" × 5.5"',
-        hint: 'Quarter of letter',
+        hint: 'Postcard',
         width: '4.25in',
         height: '5.5in',
     },
@@ -54,13 +54,13 @@ export const cardSize = {
     },
     '40x60': {
         name: '4.0" × 6.0"',
-        hint: '',
+        hint: 'Index card',
         width: '4in',
         height: '6in',
     },
     '425x55': {
         name: '4.25" × 5.5"',
-        hint: 'Quarter of letter',
+        hint: 'Postcard',
         width: '4.25in',
         height: '5.5in',
     },
