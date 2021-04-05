@@ -1,0 +1,1 @@
+export const cape = item => (Array.isArray(item) ? item : [item]);
