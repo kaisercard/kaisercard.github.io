@@ -163,15 +163,7 @@ export const PageSettings = ({
                     </Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button
-                        component={Link}
-                        to='/print'
-                        variant='contained'
-                        // onClick={() => {
-                        //     window.location.hash = '#print';
-                        //     window.location.reload();
-                        // }}
-                    >
+                    <Button component={Link} to='/print' variant='contained'>
                         Generate
                     </Button>
                 </Grid>
@@ -310,35 +302,6 @@ export const PageSettings = ({
                             <option value='side_by_side'>Side by side</option>
                         </Select>
                     </Grid>
-                    {/* <Grid className='label' item xs={divide}>
-                        Corners
-                    </Grid>
-                     <Grid item xs={12 - divide}>
-                        <Select
-                            value={rounded_corners}
-                            onChange={event =>
-                                setPageOptions({
-                                    ...pageOptions,
-                                    rounded_corners: event.target.value,
-                                })
-                            }
-                        >
-                            <option value={true}>Rounded</option>
-                            <option value={false}>Straight</option>
-                        </Select>
-                    </Grid> */}
-                    {/* <Grid className='label' item xs={divide}>
-                        Front Color
-                    </Grid>
-                    <Grid item xs={12 - divide}>
-                        <ColorSelector />
-                    </Grid>
-                    <Grid className='label' item xs={divide}>
-                        Back Color
-                    </Grid>
-                    <Grid item xs={12 - divide}>
-                        <ColorSelector />
-                    </Grid> */}
                 </Grid>
             </Grid>
             <Grid item>
@@ -396,23 +359,6 @@ export const PageSettings = ({
                     </Grid>
 
                     <Grid className='label' item xs={divide}>
-                        Icon Size
-                    </Grid>
-                    <Grid item xs={12 - divide}>
-                        <Select
-                            value={icon_inline}
-                            onChange={event =>
-                                setPageOptions({
-                                    ...pageOptions,
-                                    icon_inline: event.target.value,
-                                })
-                            }
-                        >
-                            <option value={true}>Small</option>
-                            <option value={false}>Large</option>
-                        </Select>
-                    </Grid>
-                    <Grid className='label' item xs={divide}>
                         Icon
                     </Grid>
                     <Grid item xs={12 - divide}>
@@ -427,6 +373,7 @@ export const PageSettings = ({
                             }
                         />
                     </Grid>
+
                     <Grid className='label' item xs={divide}>
                         Color
                     </Grid>
