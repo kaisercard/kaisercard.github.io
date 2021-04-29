@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Pagination } from '@material-ui/lab';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CompactPicker, GithubPicker } from 'react-color';
 import { RRC } from '.';
 import { css_color_names } from '../data/color';
@@ -138,16 +138,22 @@ export const IconSelector = ({
     emptyMessage = 'No icon selected',
     ...props
 }) => {
-    const value = valueWithRotation
-        ? valueWithRotation.split('#')[0] || ''
-        : '';
+    const [value = '', startingRotation = 0] = valueWithRotation
+        ? valueWithRotation.split('#')
+        : [];
     const [open, setOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState('');
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(20);
-    const [rotation, setRotation] = React.useState(0);
+    const [rotation, setRotation] = React.useState(startingRotation);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+    useEffect(() => {
+        setInputValue('');
+        setPage(0);
+        setRotation(startingRotation);
+    }, [valueWithRotation]);
 
     const { path, id } = iconMap[value] || {};
 
@@ -234,7 +240,7 @@ export const IconSelector = ({
                         style={{
                             height: '24px',
                             width: '24px',
-                            transform: `rotate(${rotation * 15}deg)`,
+                            transform: `rotate(${startingRotation * 15}deg)`,
                             display: path ? 'initial' : 'none',
                         }}
                         src={path || ''}

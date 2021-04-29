@@ -7,13 +7,22 @@ export const Preview = ({ card_data, options, iconMap }) => {
 
     if (card_data)
         return (
-            <Grid item xs={12} md={5}>
-                <div id='preview-container'>
+            <Grid
+                item
+                xs={12}
+                md={5}
+                container
+                direction='column'
+                justify='flex-start'
+                alignItems='center'
+                spacing={1}
+            >
+                <Grid item id='preview-container'>
                     <CardFront {...cardProps} />
-                </div>
-                <div id='preview-container'>
+                </Grid>
+                <Grid item id='preview-container'>
                     <CardBack {...cardProps} />
-                </div>
+                </Grid>
             </Grid>
         );
     return null;

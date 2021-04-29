@@ -1,5 +1,12 @@
 import styled from '@emotion/styled';
-import { Button as button, Grid, NativeSelect } from '@material-ui/core';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button as button,
+    Grid,
+    NativeSelect,
+} from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useLocalState } from '../utils/reactHooks';
 import { CardSettings } from './card-settings';
@@ -92,7 +99,13 @@ const Generator = ({ togglePrintMode }) => {
     };
 
     return (
-        <Container container spacing={2}>
+        <Container
+            container
+            direction='row'
+            justify='space-between'
+            alignItems='flex-start'
+            spacing={2}
+        >
             <PageSettings
                 cardList={cardList}
                 setCardList={setCardList}
@@ -158,23 +171,40 @@ const Deck = ({
                 <Select value={currentCard} onChange={updateCurrent}>
                     {nameList.map(makeDeckItem)}
                 </Select>
-                <Grid container spacing={2}>
-                    <Grid className='label' item xs={4}>
-                        <Button variant='contained' onClick={removeCurrent}>
-                            Delete Card
-                        </Button>
-                    </Grid>
-                    <Grid className='label' item xs={4}>
-                        <Button variant='contained' onClick={newCard}>
-                            New card
-                        </Button>
-                    </Grid>
-                    <Grid className='label' item xs={4}>
-                        <Button variant='contained' onClick={duplicateCard}>
-                            Duplicate Card
-                        </Button>
-                    </Grid>
-                </Grid>
+                <Accordion variant="outlined" square>
+                    <AccordionSummary>Manage Card</AccordionSummary>
+                    <AccordionDetails>
+                        <Grid container spacing={2}>
+                            <Grid className='label' item xs={4}>
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    onClick={newCard}
+                                >
+                                    New card
+                                </Button>
+                            </Grid>
+                            <Grid className='label' item xs={4}>
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    onClick={duplicateCard}
+                                >
+                                    Duplicate Card
+                                </Button>
+                            </Grid>
+                            <Grid className='label' item xs={4}>
+                                <Button
+                                    variant='contained'
+                                    color='secondary'
+                                    onClick={removeCurrent}
+                                >
+                                    Delete Card
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </AccordionDetails>
+                </Accordion>
             </Grid>
         </Grid>
     );

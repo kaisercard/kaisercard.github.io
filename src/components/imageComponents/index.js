@@ -1,4 +1,4 @@
-const Image = ({ alt, src, rotation, style = {}, ...props }) => {
+const Image = ({ alt, src, rotation='', style = {}, ...props }) => {
     if (!src) return null;
 
     if (rotation) {
