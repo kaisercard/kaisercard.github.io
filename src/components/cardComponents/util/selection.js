@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import {
     Button as button,
-    ButtonGroup,
+
     Dialog,
     DialogActions,
     DialogContent,
@@ -11,14 +11,13 @@ import {
     Popper,
     TextField as textField,
     useMediaQuery,
-    useTheme,
+    useTheme
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { Pagination } from '@material-ui/lab';
 import React, { useEffect } from 'react';
-import { CompactPicker, GithubPicker } from 'react-color';
+import { CompactPicker } from 'react-color';
 import { RRC } from '.';
-import { css_color_names } from '../data/color';
 
 const Button = styled(button)`
     width: 100%;
@@ -138,9 +137,10 @@ export const IconSelector = ({
     emptyMessage = 'No icon selected',
     ...props
 }) => {
-    const [value = '', startingRotation = 0] = valueWithRotation
+    const [value = '', rawRotation = ''] = valueWithRotation
         ? valueWithRotation.split('#')
         : [];
+    const startingRotation = Number(rawRotation) / 15 || 0;
     const [open, setOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState('');
     const [page, setPage] = React.useState(0);
