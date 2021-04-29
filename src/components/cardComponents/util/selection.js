@@ -132,24 +132,31 @@ export const ColorSelector = ({
 export const IconSelector = ({
     label = 'Default icon',
     iconMap,
-    value,
+    value: valueWithRotation,
     onChange,
     emptyMessage = 'No icon selected',
     ...props
 }) => {
+    const value = valueWithRotation
+        ? valueWithRotation.split('#')[0] || ''
+        : '';
     const [open, setOpen] = React.useState(false);
     const [inputValue, setInputValue] = React.useState('');
     const [page, setPage] = React.useState(0);
     const [pageSize, setPageSize] = React.useState(20);
+    const [rotation, setRotation] = React.useState(0);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const { path, id } = iconMap[value] || {};
 
     const searchValue = inputValue.split(' ').join('-');
-    let options = Object.values(iconMap).filter(op =>
-        op.id.includes(searchValue)
-    );
+    let options = Object.values(iconMap)
+        .filter(op => op.id.includes(searchValue))
+        .sort((a, b) => {
+            return a.id === value ? -1 : b.id === value ? 1 : 0;
+        });
+
     const maximumPages = Math.floor(options.length / pageSize);
 
     //Check if the search value has matches
@@ -186,8 +193,16 @@ export const IconSelector = ({
     };
 
     const clickIcon = iconId => {
-        if (typeof onChange === 'function') onChange(iconId);
+        if (typeof onChange === 'function')
+            onChange(
+                iconId +
+                    (rotation !== 0 && rotation <= 270 ? `#${rotation}` : '')
+            );
         handleClose();
+    };
+
+    const rotate = () => {
+        setRotation(rotation > 180 ? 0 : rotation + 90);
     };
 
     return (
@@ -210,7 +225,7 @@ export const IconSelector = ({
                         left: '24px',
                         WebkitTransform: 'translate(-50%, -50%)',
                         MsTransform: 'translate(-50%, -50%)',
-                        transform: 'translate(-50%, -50%)',
+                        transform:`translate(-50%, -50%) rotate(${rotation}deg)`,
                         display: path ? 'initial' : 'none',
                     }}
                     src={path || ''}
@@ -280,6 +295,15 @@ export const IconSelector = ({
                             />
                         </Grid>
                         <Grid item>
+                            <Button
+                                color='primary'
+                                variant='contained'
+                                onClick={rotate}
+                            >
+                                Rotate 90&deg;
+                            </Button>
+                        </Grid>
+                        <Grid item>
                             <ClearButton
                                 color='secondary'
                                 variant='contained'
@@ -293,7 +317,12 @@ export const IconSelector = ({
                 <DialogContent dividers>
                     <Grid container spacing={1}>
                         {options.map((op, i) => (
-                            <IconOption key={i} {...op} onClick={clickIcon} />
+                            <IconOption
+                                key={i}
+                                {...op}
+                                rotation={rotation}
+                                onClick={clickIcon}
+                            />
                         ))}
                     </Grid>
                 </DialogContent>
@@ -309,7 +338,15 @@ export const IconSelector = ({
     );
 };
 
-const IconOption = ({ id, name, path, current, onClick, ...props }) => {
+const IconOption = ({
+    id,
+    name,
+    path,
+    current,
+    onClick,
+    rotation,
+    ...props
+}) => {
     return (
         <Grid item {...props}>
             <div
@@ -326,6 +363,7 @@ const IconOption = ({ id, name, path, current, onClick, ...props }) => {
                             height: '160px',
                             width: '160px',
                             display: 'block',
+                            transform: `rotate(${rotation}deg)`,
                         }}
                         src={path}
                         alt=''

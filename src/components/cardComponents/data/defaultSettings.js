@@ -25,7 +25,6 @@ export const defaultCardData = () => ({
     color: '',
     icon_front: '',
     icon_back: '',
-    icon: '',
     title_size: '',
     body_text_size: '',
 });

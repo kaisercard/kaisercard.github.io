@@ -42,7 +42,7 @@ export const CardSettings = ({
         contents = [],
         title_size,
         body_text_size,
-        icon,
+        icon_front,
         icon_back,
         color,
     } = card;
@@ -135,8 +135,8 @@ export const CardSettings = ({
             </Grid>
             <Grid item xs={12 - divide}>
                 <IconSelector
-                    value={icon}
-                    onChange={value => updateCard({ ...card, icon: value })}
+                    value={icon_front}
+                    onChange={value => updateCard({ ...card, icon_front: value })}
                     iconMap={iconMap}
                     emptyMessage='Using default icon'
                 />

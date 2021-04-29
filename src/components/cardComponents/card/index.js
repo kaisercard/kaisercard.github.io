@@ -34,19 +34,22 @@ function card_data_color_back(card_data, options) {
 }
 
 function card_data_icon_front(card_data, options) {
-    return (
-        card_data.icon_front || card_data.icon || options.default_icon || 'ace'
-    );
+    const iconValue = card_data.icon_front || options.default_icon || 'ace';
+    return get_icon_rotation_array(iconValue);
 }
 
 function card_data_icon_back(card_data, options) {
-    return (
+    const iconValue =
         card_data.icon_back ||
-        card_data.icon ||
         card_data.icon_front ||
         options.default_icon ||
-        'ace'
-    );
+        'ace';
+    return get_icon_rotation_array(iconValue);
+}
+
+function get_icon_rotation_array(iconValue) {
+    const [icon, rotation] = iconValue.split('#');
+    return [icon, rotation];
 }
 
 function card_data_body_text_font(card_data, options) {
@@ -84,7 +87,7 @@ export const Title = ({ card_data, options }) => {
 };
 
 export const Icon = ({ card_data, options, iconMap }) => {
-    const icon = card_data_icon_front(card_data, options);
+    const [icon, rotation] = card_data_icon_front(card_data, options);
     const { path } = iconMap[icon] || {};
     const iconClass = options && options.icon_inline ? 'inlineicon' : 'icon';
 
@@ -94,19 +97,19 @@ export const Icon = ({ card_data, options, iconMap }) => {
     return (
         <div className={a}>
             <div className={b}>
-                <Image src={path} alt=""/>
+                <Image src={path} rotation={rotation} alt='' />
             </div>
         </div>
     );
 };
 
 const IconBack = ({ card_data, options, iconMap }) => {
-    const icon = card_data_icon_back(card_data, options);
+    const [icon, rotation] = card_data_icon_back(card_data, options);
     const { path } = iconMap[icon] || {};
 
     return (
         <div className='card-back-icon'>
-            <Image src={path} alt=""/>
+            <Image src={path} rotation={rotation} alt='' />
         </div>
     );
 };
@@ -140,7 +143,7 @@ export const InlineIcon = ({ params, card_data, options, iconMap }) => {
     };
     return (
         <div className={a} style={b}>
-            <Image src={path} alt="" />
+            <Image src={path} alt='' />
         </div>
     );
 };
