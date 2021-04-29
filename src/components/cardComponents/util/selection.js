@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import {
     Button as button,
+    ButtonGroup,
     Dialog,
     DialogActions,
     DialogContent,
@@ -196,13 +197,13 @@ export const IconSelector = ({
         if (typeof onChange === 'function')
             onChange(
                 iconId +
-                    (rotation !== 0 && rotation <= 270 ? `#${rotation}` : '')
+                    (rotation !== 0 && rotation < 24 ? `#${rotation * 15}` : '')
             );
         handleClose();
     };
 
-    const rotate = () => {
-        setRotation(rotation > 180 ? 0 : rotation + 90);
+    const rotate = deg => () => {
+        setRotation(rotation + deg >= 24 ? 0 : rotation + deg);
     };
 
     return (
@@ -215,9 +216,8 @@ export const IconSelector = ({
                 }}
                 onClick={handleOpen}
             >
-                <img
+                <div
                     style={{
-                        backgroundColor: 'black',
                         height: '24px',
                         width: '24px',
                         position: 'absolute',
@@ -225,12 +225,22 @@ export const IconSelector = ({
                         left: '24px',
                         WebkitTransform: 'translate(-50%, -50%)',
                         MsTransform: 'translate(-50%, -50%)',
-                        transform:`translate(-50%, -50%) rotate(${rotation}deg)`,
-                        display: path ? 'initial' : 'none',
+                        transform: `translate(-50%, -50%)`,
+                        backgroundColor: 'black',
+                        overflow: 'hidden',
                     }}
-                    src={path || ''}
-                    alt=''
-                />
+                >
+                    <img
+                        style={{
+                            height: '24px',
+                            width: '24px',
+                            transform: `rotate(${rotation * 15}deg)`,
+                            display: path ? 'initial' : 'none',
+                        }}
+                        src={path || ''}
+                        alt=''
+                    />
+                </div>
                 <span
                     style={{
                         position: 'absolute',
@@ -260,7 +270,7 @@ export const IconSelector = ({
                         alignItems='center'
                     >
                         <Grid item>
-                            <h1>Select an icon</h1>
+                            <h1 style={{ margin: 0 }}>Select an icon</h1>
                         </Grid>
                         <Grid item>
                             <IconButton onClick={handleClose}>
@@ -270,22 +280,20 @@ export const IconSelector = ({
                     </Grid>
                 </DialogTitle>
                 <DialogContent dividers style={{ overflow: 'hidden' }}>
-                    <p>
-                        Select an icon. You can search by the name of the icon.
-                        All icons are credited to{' '}
-                        <a target='_blank' href='https://game-icons.net/'>
-                            game-icons.net
-                        </a>
-                        . You should use their site for a more detailed search
-                        function.
-                    </p>
-                    <Grid
-                        container
-                        direction='row'
-                        justify='space-between'
-                        alignItems='center'
-                    >
-                        <Grid item xs={6}>
+                    <Grid container direction='row' spacing={1}>
+                        <Grid item>
+                            <p>
+                                Select an icon. You can search by the name of
+                                the icon. All icons are credited to{' '}
+                                <a
+                                    target='_blank'
+                                    href='https://game-icons.net/'
+                                >
+                                    game-icons.net
+                                </a>
+                                . You should use their site for a more detailed
+                                search function.
+                            </p>
                             <TextField
                                 label='Search for Icon'
                                 value={inputValue}
@@ -294,23 +302,60 @@ export const IconSelector = ({
                                 }
                             />
                         </Grid>
-                        <Grid item>
-                            <Button
-                                color='primary'
-                                variant='contained'
-                                onClick={rotate}
+                        <Grid
+                            item
+                            container
+                            direction='row'
+                            justify='space-between'
+                            alignItems='flex-start'
+                            spacing={1}
+                        >
+                            <Grid
+                                item
+                                container
+                                direction='row'
+                                justify='flex-start'
+                                alignItems='center'
+                                xs={8}
                             >
-                                Rotate 90&deg;
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <ClearButton
-                                color='secondary'
-                                variant='contained'
-                                onClick={() => clickIcon('')}
-                            >
-                                No Icon
-                            </ClearButton>
+                                <Grid item>
+                                    <div style={{ width: 80 }}>
+                                        {rotation * 15}&deg;
+                                    </div>
+                                </Grid>
+                                <Grid item>
+                                    <Button onClick={rotate(1)}>
+                                        Rotate 15&deg;
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button onClick={rotate(2)}>
+                                        Rotate 30&deg;
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button onClick={rotate(6)}>
+                                        Rotate 90&deg;
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        onClick={() => setRotation(0)}
+                                        style={{ height: '100%' }}
+                                    >
+                                        Set to 0&deg;
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                <ClearButton
+                                    color='secondary'
+                                    variant='contained'
+                                    onClick={() => clickIcon('')}
+                                >
+                                    No Icon
+                                </ClearButton>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </DialogContent>
@@ -357,17 +402,21 @@ const IconOption = ({
                 onClick={() => onClick(id)}
             >
                 {path ? (
-                    <img
-                        style={{
-                            backgroundColor: 'black',
-                            height: '160px',
-                            width: '160px',
-                            display: 'block',
-                            transform: `rotate(${rotation}deg)`,
-                        }}
-                        src={path}
-                        alt=''
-                    />
+                    <div
+                        style={{ backgroundColor: 'black', overflow: 'hidden' }}
+                    >
+                        <img
+                            style={{
+                                // backgroundColor: 'black',
+                                height: '160px',
+                                width: '160px',
+                                display: 'block',
+                                transform: `rotate(${rotation * 15}deg)`,
+                            }}
+                            src={path}
+                            alt=''
+                        />
+                    </div>
                 ) : (
                     <div
                         style={{
