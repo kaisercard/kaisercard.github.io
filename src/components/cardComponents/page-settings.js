@@ -45,6 +45,7 @@ export const PageSettings = ({
         card_size,
         default_title_size,
         default_body_text_size,
+        default_card_count,
         icon_inline,
         page_rows,
         page_columns,
@@ -88,6 +89,14 @@ export const PageSettings = ({
             cardList.map(card => ({
                 ...card,
                 icon_back: default_icon,
+            }))
+        );
+
+    const updateAllCardCount = () =>
+        setCardList(
+            cardList.map(card => ({
+                ...card,
+                count: default_card_count,
             }))
         );
 
@@ -359,6 +368,21 @@ export const PageSettings = ({
                     </Grid>
 
                     <Grid className='label' item xs={divide}>
+                        Card Count
+                    </Grid>
+                    <Grid item xs={12 - divide}>
+                        <TextField
+                            value={default_card_count}
+                            onChange={event =>
+                                setPageOptions({
+                                    ...pageOptions,
+                                    default_card_count: event.target.value,
+                                })
+                            }
+                        />
+                    </Grid>
+
+                    <Grid className='label' item xs={divide}>
                         Icon
                     </Grid>
                     <Grid item xs={12 - divide}>
@@ -393,9 +417,17 @@ export const PageSettings = ({
             <Grid item>
                 <h2>Apply defaults to all cards</h2>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                    <Grid item xs={buttonXS}>
                         <Button variant='contained' onClick={updateAllColor}>
                             Apply color
+                        </Button>
+                    </Grid>
+                    <Grid item xs={buttonXS}>
+                        <Button
+                            variant='contained'
+                            onClick={updateAllCardCount}
+                        >
+                            Apply card count
                         </Button>
                     </Grid>
                     <Grid item xs={buttonXS}>

@@ -5,6 +5,7 @@ export const defaultOptions = () => ({
     default_icon: 'ace',
     default_title_size: '13',
     default_body_text_size: '8',
+    default_card_count:1,
     page_size: 'letter',
     page_rows: 2,
     page_columns: 2,
@@ -17,8 +18,8 @@ export const defaultOptions = () => ({
     rounded_corners: false,
 });
 
-export const defaultCardData = () => ({
-    count: 1,
+export const defaultCardData = (count = 1) => ({
+    count,
     title: 'New card',
     contents: [],
     tags: [],

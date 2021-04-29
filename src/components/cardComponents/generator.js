@@ -44,15 +44,16 @@ const Generator = ({ togglePrintMode }) => {
         'card_print_options',
         defaultOptions()
     );
-
     const [iconMap, setIconMap] = React.useState({});
     useEffect(() => {
         const loadedIcons = require('../../iconMap.json');
         setIconMap(loadedIcons);
     }, []);
 
+    const {default_card_count=1} = options;
+
     if (cardList.length === 0) {
-        setCardList([defaultCardData()]);
+        setCardList([defaultCardData(1)]);
     }
 
     if (currentCard >= cardList.length) {
@@ -68,7 +69,8 @@ const Generator = ({ togglePrintMode }) => {
     };
 
     const updateIndex = event => {
-        setCurrentCard(event.target.value);
+        if (typeof event === 'number') setCurrentCard(event);
+        else setCurrentCard(event.target.value);
     };
 
     const removeCurrent = () => {
@@ -78,7 +80,7 @@ const Generator = ({ togglePrintMode }) => {
     };
 
     const newCard = () => {
-        setCardList([...cardList, defaultCardData()]);
+        setCardList([...cardList, defaultCardData(default_card_count)]);
         setCurrentCard(cardList.length);
     };
 
@@ -168,10 +170,38 @@ const Deck = ({
                 Card
             </Grid>
             <Grid item xs={12 - divide}>
+                <Grid container spacing={2}>
+                    <Grid className='label' item xs={6}>
+                        <Button
+                            variant='contained'
+                            onClick={() =>
+                                updateCurrent(Math.max(0, currentCard - 1))
+                            }
+                        >
+                            Previous Card
+                        </Button>
+                    </Grid>
+                    <Grid className='label' item xs={6}>
+                        <Button
+                            variant='contained'
+                            onClick={() =>
+                                updateCurrent(
+                                    Math.min(
+                                        cardList.length - 1,
+                                        currentCard + 1
+                                    )
+                                )
+                            }
+                        >
+                            Next Card
+                        </Button>
+                    </Grid>
+                </Grid>
                 <Select value={currentCard} onChange={updateCurrent}>
                     {nameList.map(makeDeckItem)}
                 </Select>
-                <Accordion variant="outlined" square>
+
+                <Accordion variant='outlined' square>
                     <AccordionSummary>Manage Card</AccordionSummary>
                     <AccordionDetails>
                         <Grid container spacing={2}>
