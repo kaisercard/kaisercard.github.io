@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 import { TabManager } from '../../tabComponents';
 import ContentText from './content-text';
+import PrintingText from './printing';
 
 
 const Button = styled(button)`
@@ -83,8 +84,8 @@ const HelpDialog = () => {
                 </DialogTitle>
                 <DialogContent>
                     <TabManager
-                        names={['Styling Content']}
-                        tabContent={[<ContentText />]}
+                        names={['Styling Content', "Printing Cards"]}
+                        tabContent={[<ContentText />, <PrintingText />]}
                     />
                 </DialogContent>
                 <DialogActions>

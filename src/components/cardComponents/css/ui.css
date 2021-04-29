@@ -48,3 +48,8 @@
     top: 50%;
     margin-top: -12px;
 }
+
+.alert {
+    background-color: aquamarine;
+    padding: 8px;
+}
