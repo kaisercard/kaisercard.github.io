@@ -200,6 +200,7 @@ const Contents = ({ value = [], onUpdate, ...props }) => {
             style={{
                 display: 'block',
                 width: '100%',
+                maxWidth:'95%',
                 height: '100%',
                 minHeight: 600,
                 padding: '6px 12px',

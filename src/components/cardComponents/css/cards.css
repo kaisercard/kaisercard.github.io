@@ -399,3 +399,7 @@
     background-repeat: no-repeat;
     object-fit: scale-down;
 }
+
+.card .card-d20-stat td{
+    text-align: center;
+}

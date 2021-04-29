@@ -50,7 +50,7 @@ const Generator = ({ togglePrintMode }) => {
         setIconMap(loadedIcons);
     }, []);
 
-    const {default_card_count=1} = options;
+    const { default_card_count = 1 } = options;
 
     if (cardList.length === 0) {
         setCardList([defaultCardData(1)]);
@@ -107,6 +107,7 @@ const Generator = ({ togglePrintMode }) => {
             justify='space-between'
             alignItems='flex-start'
             spacing={2}
+            style={{ padding: 8, overflowX: 'hidden' }}
         >
             <PageSettings
                 cardList={cardList}

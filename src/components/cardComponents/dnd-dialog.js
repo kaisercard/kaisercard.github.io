@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import styled from '@emotion/styled';
 import {
     Button as button,

@@ -159,7 +159,7 @@ const Picture = ({ params, card_data, options }) => {
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                height: `${height}px`,
+                height: `${height}mm`,
             }}
         />
     );
@@ -220,6 +220,41 @@ const Boxes = ({ params, card_data, options }) => {
     );
 };
 
+const D20Stat = ({ params, card_data, options }) => {
+    const [str = 10, dex = 10, con = 10, int = 10, wis = 10, cha = 10] = params;
+
+    const display = v => {
+        const vnum = Number(v) || 10;
+        const mod = Math.floor((vnum - 10) / 2);
+        return `${vnum} (${mod >= 0 ? '+' + mod : mod})`;
+    };
+
+    return (
+        <table className='card-element card-d20-stat'>
+            <thead>
+                <tr>
+                    <th>STR</th>
+                    <th>DEX</th>
+                    <th>CON</th>
+                    <th>INT</th>
+                    <th>WIS</th>
+                    <th>CHA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{display(str)}</td>
+                    <td>{display(dex)}</td>
+                    <td>{display(con)}</td>
+                    <td>{display(int)}</td>
+                    <td>{display(wis)}</td>
+                    <td>{display(cha)}</td>
+                </tr>
+            </tbody>
+        </table>
+    );
+};
+
 const Property = ({ params, card_data, options }) => {
     const right = (
         <div style={{ float: 'right' }}>
@@ -276,20 +311,35 @@ const Justify = ({ params, card_data, options }) => {
 };
 
 const Bullet = ({ params, card_data, options }) => {
+    let item = RRC(params[0]);
+    if (params.length > 1) {
+        item = (
+            <>
+                <h4 className='card-property-name'>{RRC(params[0])}</h4>
+                <p className='card-p card-property-text'>{RRC(params[1])}</p>
+            </>
+        );
+    }
     return (
         <ul className='card-element card-bullet-line'>
-            <li className='card-bullet'>{RRC(params[0])}</li>
+            <li className='card-bullet'>{item}</li>
         </ul>
     );
 };
 
 const Check = ({ params, card_data, options }) => {
+    let item = RRC(params[0]);
+    if (params.length > 1) {
+        item = (
+            <>
+                <h4 className='card-property-name'>{RRC(params[0])}</h4>
+                <p className='card-p card-property-text'>{RRC(params[1])}</p>
+            </>
+        );
+    }
     return (
         <ul className='card-element card-check-line'>
-            <li className='card-check'>
-                <h4 className='card-property-name'>{RRC(params[0])}</h4>
-                {RRC(params[1])}
-            </li>
+            <li className='card-check'>{item}</li>
         </ul>
     );
 };
@@ -401,6 +451,7 @@ const card_element_generators = {
     property: Property,
     rule: Ruler,
     ruler: Ruler,
+    box: Boxes,
     boxes: Boxes,
     description: Description,
     text: Text,
@@ -418,6 +469,7 @@ const card_element_generators = {
     table: TableRow,
     tablerow: TableRow,
     pftrait: PFTrait,
+    d20stat: D20Stat,
     unknown: Unknown,
 };
 

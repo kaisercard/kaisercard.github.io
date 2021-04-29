@@ -12,20 +12,6 @@ function App() {
             </Route>
         </Switch>
     );
-
-    if (window.location.hash === '#print') {
-        return (
-            <div>
-                <CardPrinter />
-            </div>
-        );
-    }
-
-    return (
-        <div>
-            <CardGenerator />
-        </div>
-    );
 }
 
 export default App;

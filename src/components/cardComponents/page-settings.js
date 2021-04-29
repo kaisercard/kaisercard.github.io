@@ -14,6 +14,7 @@ import { defaultOptions } from './data/defaultSettings';
 import exampleCards from './data/exampleCards';
 import { bodyFont, cardSize, pageSize, titleFont } from './data/option-data';
 import { default as Order } from './dnd-dialog';
+import HelpDialog from './help-dialog';
 import { ColorSelector, IconSelector } from './util/selection';
 
 const Button = styled(button)`
@@ -133,7 +134,7 @@ export const PageSettings = ({
             {/* Global Settings */}
             <Grid item container spacing={2}>
                 <Grid item xs={buttonXS}>
-                    <Button variant='contained'>Open Help</Button>
+                    <HelpDialog />
                 </Grid>
                 <Grid item xs={buttonXS}>
                     <Button
