@@ -153,6 +153,8 @@ const Deck = ({
     const divide = 2;
     const nameList = cardList.map(c => c.title);
 
+    console.log('current', currentCard, typeof currentCard);
+
     return (
         <Grid
             container
@@ -176,7 +178,9 @@ const Deck = ({
                         <Button
                             variant='contained'
                             onClick={() =>
-                                updateCurrent(Math.max(0, currentCard - 1))
+                                updateCurrent(
+                                    Math.max(0, Number(currentCard) - 1)
+                                )
                             }
                         >
                             Previous Card
@@ -189,7 +193,7 @@ const Deck = ({
                                 updateCurrent(
                                     Math.min(
                                         cardList.length - 1,
-                                        currentCard + 1
+                                        Number(currentCard) + 1
                                     )
                                 )
                             }
