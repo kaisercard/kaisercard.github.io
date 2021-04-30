@@ -34,7 +34,8 @@ function card_data_color_back(card_data, options) {
 }
 
 function card_data_icon_front(card_data, options) {
-    const iconValue = card_data.icon_front || options.default_icon || 'ace';
+    const iconValue =
+        card_data.icon_front || card_data.icon || options.default_icon || 'ace';
     return get_icon_rotation_array(iconValue);
 }
 
@@ -42,6 +43,7 @@ function card_data_icon_back(card_data, options) {
     const iconValue =
         card_data.icon_back ||
         card_data.icon_front ||
+        card_data.icon ||
         options.default_icon ||
         'ace';
     return get_icon_rotation_array(iconValue);
