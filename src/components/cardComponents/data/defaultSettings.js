@@ -28,6 +28,7 @@ export const defaultCardData = (count = 1) => ({
     icon_back: '',
     title_size: '',
     body_text_size: '',
+    qr: ''
 });
 
 export const clearCardData = card => {

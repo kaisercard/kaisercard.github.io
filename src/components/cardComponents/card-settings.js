@@ -45,6 +45,7 @@ export const CardSettings = ({
         icon_front,
         icon_back,
         color,
+        qr,
     } = card;
 
     return (
@@ -131,12 +132,33 @@ export const CardSettings = ({
                 />
             </Grid>
             <Grid className='label' item xs={divide}>
+                QR Code
+            </Grid>
+            <Grid item xs={12 - divide}>
+                <TextField
+                    disabled={
+                        icon_front !== 'qr-code' && icon_back !== 'qr-code'
+                    }
+                    placeholder='Enter a URL to be displayed in place of an icon.'
+                    value={
+                        icon_front !== 'qr-code' && icon_back !== 'qr-code'
+                            ? 'Only enabled when front or back icon are qr-code'
+                            : qr
+                    }
+                    onChange={event =>
+                        updateCard({ ...card, qr: event.target.value })
+                    }
+                />
+            </Grid>
+            <Grid className='label' item xs={divide}>
                 Icon
             </Grid>
             <Grid item xs={12 - divide}>
                 <IconSelector
                     value={icon_front}
-                    onChange={value => updateCard({ ...card, icon_front: value })}
+                    onChange={value =>
+                        updateCard({ ...card, icon_front: value })
+                    }
                     iconMap={iconMap}
                     emptyMessage='Using default icon'
                 />
@@ -200,7 +222,7 @@ const Contents = ({ value = [], onUpdate, ...props }) => {
             style={{
                 display: 'block',
                 width: '100%',
-                maxWidth:'95%',
+                maxWidth: '95%',
                 height: '100%',
                 minHeight: 600,
                 padding: '6px 12px',

@@ -60,6 +60,11 @@
     filter: invert(1);
 }
 
+.card-back-icon.qr-code {
+    -webkit-filter: invert(0);
+    filter: invert(0);
+}
+
 .card-title-icon {
     width: 12mm;
     height: 12mm;
@@ -398,6 +403,10 @@
     object-fit: scale-down;
     background-repeat: no-repeat;
     object-fit: scale-down;
+}
+
+.card .card-title .card-pfaction {
+    filter:invert(1);
 }
 
 .card .card-d20-stat td{

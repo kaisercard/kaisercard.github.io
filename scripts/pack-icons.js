@@ -4,7 +4,7 @@ const { readFileNamesSync } = require('./util/readFiles');
 const packer = () => {
     const dest = './src/';
 
-    const content = readFileNamesSync('./public/icons/ffffff/transparent/1x1/');
+    const content = readFileNamesSync('./public/icons/');
 
     console.log(`Found ${content.length} unique icons`);
 

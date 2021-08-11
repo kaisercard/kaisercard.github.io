@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Image from '../../imageComponents';
 import { cardSize, pageSize } from '../data/option-data';
 import { RRC } from '../util';
+import QRCode from 'qrcode.react';
 
 const Wrapper = styled('div')`
     @page {
@@ -84,8 +85,8 @@ export const Title = ({ card_data, options }) => {
         card_data.title_size || options.default_title_size || 'normal';
 
     const a = 'card-title card-title-' + title_size;
-
-    return <div className={a}>{title}</div>;
+    console.log(title_size);
+    return <div className={a}>{RRC(title, title_size)}</div>;
 };
 
 export const Icon = ({ card_data, options, iconMap }) => {
@@ -95,6 +96,23 @@ export const Icon = ({ card_data, options, iconMap }) => {
 
     const a = 'card-title-' + iconClass + '-container';
     const b = 'card-front-icon card-title-' + iconClass;
+
+    if (icon === 'qr-code') {
+        return (
+            <div className={a}>
+                <div className={b}>
+                    <QRCode
+                        value={card_data.qr || 'https://kaisercard.github.io/'}
+                        size={28}
+                        renderAs='svg'
+                        includeMargin
+                        bgColor='transparent'
+                        fgColor='white'
+                    />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={a}>
@@ -108,6 +126,19 @@ export const Icon = ({ card_data, options, iconMap }) => {
 const IconBack = ({ card_data, options, iconMap }) => {
     const [icon, rotation] = card_data_icon_back(card_data, options);
     const { path } = iconMap[icon] || {};
+
+    if (icon === 'qr-code') {
+        return (
+            <div className='card-back-icon qr-code'>
+                <QRCode
+                    value={card_data.qr || 'https://kaisercard.github.io/'}
+                    size={96}
+                    renderAs='svg'
+                    includeMargin
+                />
+            </div>
+        );
+    }
 
     return (
         <div className='card-back-icon'>
@@ -258,67 +289,91 @@ const D20Stat = ({ params, card_data, options }) => {
 };
 
 const Property = ({ params, card_data, options }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     const right = (
         <div style={{ float: 'right' }}>
-            <h4 className='card-property-name'>{RRC(params[2])}</h4>
-            <p className='card-p card-property-text'>{RRC(params[3])}</p>
+            <h4 className='card-property-name'>{RRC(params[2], textHeight)}</h4>
+            <p className='card-p card-property-text'>
+                {RRC(params[3], textHeight)}
+            </p>
         </div>
     );
     return (
         <div className='card-element card-property-line'>
-            <h4 className='card-property-name'>{RRC(params[0])}</h4>
-            <p className='card-p card-property-text'>{RRC(params[1])}</p>
+            <h4 className='card-property-name'>{RRC(params[0], textHeight)}</h4>
+            <p className='card-p card-property-text'>
+                {RRC(params[1], textHeight)}
+            </p>
             {params[2] ? right : null}
         </div>
     );
 };
 
 const Description = ({ params, card_data, options }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     return (
         <div className='card-element card-description-line'>
-            <h4 className='card-description-name'>{RRC(params[0])}</h4>
-            <p className='card-p card-description-text'>{RRC(params[1])}</p>
+            <h4 className='card-description-name'>
+                {RRC(params[0], textHeight)}
+            </h4>
+            <p className='card-p card-description-text'>
+                {RRC(params[1], textHeight)}
+            </p>
         </div>
     );
 };
 
 const Text = ({ params, card_data, options }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     return (
         <div className='card-element card-description-line'>
-            <p className='card-p card-description-text'>{RRC(params[0])}</p>
+            <p className='card-p card-description-text'>
+                {RRC(params[0], textHeight)}
+            </p>
         </div>
     );
 };
 
 const Center = ({ params, card_data, options }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     return (
         <div
             className='card-element card-description-line'
             style={{ textAlign: 'center' }}
         >
-            <p className='card-p card-description-text'>{RRC(params[0])}</p>
+            <p className='card-p card-description-text'>
+                {RRC(params[0], textHeight)}
+            </p>
         </div>
     );
 };
 
 const Justify = ({ params, card_data, options }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     return (
         <div
             className='card-element card-description-line'
             style={{ textAlign: 'justify', hyphens: 'auto' }}
         >
-            <p className='card-p card-description-text'>{RRC(params[0])}</p>
+            <p className='card-p card-description-text'>
+                {RRC(params[0], textHeight)}
+            </p>
         </div>
     );
 };
 
 const Bullet = ({ params, card_data, options }) => {
-    let item = RRC(params[0]);
+    const textHeight = card_data_body_text_font(card_data, options);
+    let item = RRC(params[0], textHeight);
     if (params.length > 1) {
         item = (
             <>
-                <h4 className='card-property-name'>{RRC(params[0])}</h4>
-                <p className='card-p card-property-text'>{RRC(params[1])}</p>
+                <h4 className='card-property-name'>
+                    {RRC(params[0], textHeight)}
+                </h4>
+                <p className='card-p card-property-text'>
+                    {RRC(params[1], textHeight)}
+                </p>
             </>
         );
     }
@@ -330,12 +385,17 @@ const Bullet = ({ params, card_data, options }) => {
 };
 
 const Check = ({ params, card_data, options }) => {
-    let item = RRC(params[0]);
+    const textHeight = card_data_body_text_font(card_data, options);
+    let item = RRC(params[0], textHeight);
     if (params.length > 1) {
         item = (
             <>
-                <h4 className='card-property-name'>{RRC(params[0])}</h4>
-                <p className='card-p card-property-text'>{RRC(params[1])}</p>
+                <h4 className='card-property-name'>
+                    {RRC(params[0], textHeight)}
+                </h4>
+                <p className='card-p card-property-text'>
+                    {RRC(params[1], textHeight)}
+                </p>
             </>
         );
     }
@@ -347,18 +407,21 @@ const Check = ({ params, card_data, options }) => {
 };
 
 const Section = ({ params, card_data, options }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     var section_text_font = card_data_section_text_font(card_data, options);
     var color = card_data_color_front(card_data, options);
     var section = params[0] || '';
 
-    const right = <span style={{ float: 'right' }}>{RRC(params[1])}</span>;
+    const right = (
+        <span style={{ float: 'right' }}>{RRC(params[1], textHeight)}</span>
+    );
 
     return (
         <h3
             className='card-section'
             style={{ color: color, fontSize: section_text_font + 'pt' }}
         >
-            {RRC(params[0])}
+            {RRC(params[0], textHeight)}
             {params[1] ? right : null}
         </h3>
     );
@@ -377,6 +440,7 @@ const TableHeader = ({
     iconMap,
     ...props
 }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     return (
         <thead>
             <tr
@@ -386,7 +450,7 @@ const TableHeader = ({
             >
                 {params.map((param, i) => (
                     <td key={i} className='card-table-cell' style={cellStyle}>
-                        {RRC(param)}
+                        {RRC(param, textHeight)}
                     </td>
                 ))}
             </tr>
@@ -402,6 +466,7 @@ const TableRow = ({
     rowStyle,
     props,
 }) => {
+    const textHeight = card_data_body_text_font(card_data, options);
     return (
         <tbody>
             <tr
@@ -411,7 +476,7 @@ const TableRow = ({
             >
                 {params.map((param, i) => (
                     <td key={i} className='card-table-cell' style={cellStyle}>
-                        {RRC(param)}
+                        {RRC(param, textHeight)}
                     </td>
                 ))}
             </tr>
@@ -472,6 +537,7 @@ const card_element_generators = {
     tablerow: TableRow,
     pftrait: PFTrait,
     d20stat: D20Stat,
+    d20ability: D20Stat,
     unknown: Unknown,
 };
 
@@ -509,7 +575,6 @@ export const CardBack = props => {
     const { card_data, options } = props;
     var color = card_data_color_back(card_data, options);
     var colorStyle = card_generate_background_color_style(color, options);
-    var url = card_data.background_image;
 
     const { width, height } = cardSize[options.card_size];
     const masterStyle = { width, height };
