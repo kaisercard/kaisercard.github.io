@@ -12,9 +12,15 @@ export const pageSize = {
         width: '2.25in',
         height: '3.5in',
     },
+    '25x35': {
+        name: '2.5" × 3.5"',
+        hint: 'Poker card',
+        width: '2.5in',
+        height: '3.5in',
+    },
     '30x50': {
         name: '3.0" × 5.0"',
-        hint: 'Poker card',
+        hint: 'Index card (s)',
         width: '3in',
         height: '5in',
     },
@@ -46,9 +52,15 @@ export const cardSize = {
         width: '2.25in',
         height: '3.5in',
     },
+    '25x35': {
+        name: '2.5" × 3.5"',
+        hint: 'Poker card',
+        width: '2.5in',
+        height: '3.5in',
+    },
     '30x50': {
         name: '3.0" × 5.0"',
-        hint: 'Poker card',
+        hint: 'Index card (s)',
         width: '3in',
         height: '5in',
     },

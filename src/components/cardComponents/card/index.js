@@ -785,11 +785,11 @@ export const card_pages_generate_html = (cardList, options, iconMap) => {
 };
 
 const card_pages_wrap = (pages, options) => {
-    const { page_size, card_orientation } = options;
+    const { page_size, page_orientation } = options;
     const { width = '4.25in', height = '5.5in' } = pageSize[page_size];
     const masterStyle = { width, height };
 
-    if (card_orientation === 'landscape') {
+    if (page_orientation === 'landscape') {
         masterStyle.width = height;
         masterStyle.height = width;
     }
