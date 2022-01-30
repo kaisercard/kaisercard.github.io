@@ -589,6 +589,11 @@ export const CardBack = props => {
         ...masterStyle,
     };
 
+    if (true) {
+        style.border = 'none';
+        style.backgroundColor = 'none';
+    }
+
     // card-size-${options.card_size}
     return (
         <div className={`card`} style={style}>
