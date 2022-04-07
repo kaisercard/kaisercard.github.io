@@ -251,5 +251,6 @@
             "snippet": "{@state ${TM_SELECTED_TEXT/(?:(\\w+)|(\\w*)\\W+(\\w*))/${1:/downcase}${2:/downcase}${3:/capitalize}/g}}"
         }
     },
-    "typescript.preferences.quoteStyle": "single"
+    "typescript.preferences.quoteStyle": "single",
+    "svg.preview.background": "transparent"
 }
